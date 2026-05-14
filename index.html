@@ -1,302 +1,1139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMPRESSION — Portfolio</title>
-    <meta name="description" content="Compression is a free kinetic portfolio HTML CSS template with CSS-only expanding panels, industrial dark theme, and modal popups.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="templatemo-620-compression-style.css">
-<!--
-TemplateMo 620 Compression
-https://templatemo.com/tm-620-compression
--->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NEXUS — Gaming PCs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #040408;
+      --surface: #0a0a14;
+      --card: #0f0f1e;
+      --accent: #00f0ff;
+      --accent2: #ff003c;
+      --accent3: #7b00ff;
+      --text: #e8e8ff;
+      --muted: #6060a0;
+      --border: rgba(0,240,255,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    #cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+      box-shadow: 0 0 12px var(--accent), 0 0 30px var(--accent);
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s, border-color 0.2s;
+      opacity: 0.6;
+    }
+    body:has(a:hover) #cursor, body:has(button:hover) #cursor {
+      width: 20px; height: 20px;
+      background: var(--accent2);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent3); border-radius: 2px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(4,4,8,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem; font-weight: 900;
+      letter-spacing: 4px;
+      color: var(--accent);
+      text-shadow: 0 0 20px var(--accent);
+    }
+    .logo span { color: var(--accent2); }
+    nav ul { list-style: none; display: flex; gap: 36px; }
+    nav ul a {
+      color: var(--muted); text-decoration: none;
+      font-weight: 600; letter-spacing: 2px; font-size: 0.85rem;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+    nav ul a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--accent);
+      transform: scaleX(0); transition: transform 0.3s;
+    }
+    nav ul a:hover { color: var(--accent); }
+    nav ul a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      background: transparent; border: 1px solid var(--accent);
+      color: var(--accent); padding: 10px 24px;
+      font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+      letter-spacing: 2px; cursor: none;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .nav-cta:hover {
+      background: var(--accent); color: var(--bg);
+      box-shadow: 0 0 30px var(--accent);
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding-top: 80px;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,240,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,240,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridPan 20s linear infinite;
+    }
+    @keyframes gridPan {
+      0% { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
+    }
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(123,0,255,0.18) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,240,255,0.1) 0%, transparent 70%);
+      top: 20%; left: 20%;
+      animation: pulse 6s ease-in-out infinite reverse;
+    }
+    @keyframes pulse {
+      0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+      50% { transform: translate(-50%,-50%) scale(1.15); opacity: 0.6; }
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+      max-width: 1200px; padding: 0 60px; width: 100%;
+    }
+    .hero-tag {
+      font-size: 0.75rem; letter-spacing: 4px; color: var(--accent);
+      text-transform: uppercase; font-weight: 600;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+      opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-tag::before {
+      content: ''; width: 40px; height: 1px; background: var(--accent);
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900; line-height: 1.1;
+      margin-bottom: 24px;
+      opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+    }
+    h1 .line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      color: var(--muted); line-height: 1.7; max-width: 480px;
+      font-size: 1.05rem; margin-bottom: 40px;
+      opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      color: var(--bg); border: none;
+      padding: 16px 40px; font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem; letter-spacing: 2px; font-weight: 700;
+      cursor: none; position: relative; overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.2s;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--accent3), var(--accent));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 40px rgba(0,240,255,0.5);
+      transform: translateY(-2px);
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-ghost {
+      background: transparent; border: 1px solid var(--muted);
+      color: var(--text); padding: 16px 40px;
+      font-family: 'Orbitron', sans-serif; font-size: 0.8rem;
+      letter-spacing: 2px; cursor: none;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* PC VISUAL */
+    .hero-visual {
+      opacity: 0; animation: fadeIn 1.2s 0.5s forwards;
+      display: flex; align-items: center; justify-content: center;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .pc-case {
+      position: relative; width: 280px; height: 420px;
+    }
+    .pc-body {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #1a1a2e, #0f0f1e, #0a0a18);
+      border: 1px solid rgba(0,240,255,0.2);
+      border-radius: 8px;
+      box-shadow:
+        0 0 60px rgba(123,0,255,0.2),
+        inset 0 0 40px rgba(0,240,255,0.03);
+    }
+    .pc-glass {
+      position: absolute;
+      top: 20px; left: 20px; right: 80px; bottom: 20px;
+      background: rgba(0,240,255,0.03);
+      border: 1px solid rgba(0,240,255,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .rgb-strip {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3), var(--accent2), var(--accent));
+      background-size: 200% 100%;
+      animation: rgbSlide 2s linear infinite;
+    }
+    @keyframes rgbSlide {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+    .fan {
+      position: absolute; top: 40px; left: 50%;
+      transform: translateX(-50%);
+      width: 100px; height: 100px;
+    }
+    .fan-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(0,240,255,0.2);
+    }
+    .fan-blade {
+      position: absolute; top: 50%; left: 50%;
+      width: 42px; height: 42px;
+      transform-origin: 0 0;
+    }
+    .fan-blade::before {
+      content: '';
+      position: absolute;
+      width: 36px; height: 16px;
+      background: linear-gradient(135deg, rgba(0,240,255,0.4), rgba(123,0,255,0.2));
+      border-radius: 50% 0 50% 0;
+      border: 1px solid rgba(0,240,255,0.3);
+    }
+    .fan-group {
+      position: absolute; inset: 0;
+      animation: spin 1.5s linear infinite;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .fan-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px; height: 14px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+    }
+    .gpu {
+      position: absolute; top: 170px; left: 10px; right: 10px;
+      height: 80px;
+      background: linear-gradient(135deg, #111122, #1a1a2e);
+      border: 1px solid rgba(0,240,255,0.15);
+      border-radius: 4px;
+    }
+    .gpu-rgb {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent3), var(--accent));
+      background-size: 200%; animation: rgbSlide 1.5s linear infinite reverse;
+    }
+    .gpu-label {
+      position: absolute; bottom: 10px; left: 14px;
+      font-family: 'Orbitron', sans-serif; font-size: 0.55rem;
+      letter-spacing: 2px; color: rgba(0,240,255,0.6);
+    }
+    .ram-sticks {
+      position: absolute; top: 270px; left: 10px; display: flex; gap: 6px;
+    }
+    .ram {
+      width: 18px; height: 90px;
+      background: linear-gradient(180deg, #1e1e3e, #0a0a18);
+      border: 1px solid rgba(0,240,255,0.1);
+      border-radius: 2px;
+      position: relative; overflow: hidden;
+    }
+    .ram::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 30%;
+      background: linear-gradient(180deg, rgba(123,0,255,0.4), transparent);
+      animation: ramGlow 2s ease-in-out infinite alternate;
+    }
+    .ram:nth-child(2)::before { animation-delay: 0.3s; }
+    .ram:nth-child(3)::before { animation-delay: 0.6s; }
+    .ram:nth-child(4)::before { animation-delay: 0.9s; }
+    @keyframes ramGlow { from { opacity: 0.4; } to { opacity: 1; } }
+    .pc-ports {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 10px; padding: 12px 8px;
+    }
+    .port {
+      width: 20px; height: 8px;
+      background: #050510;
+      border: 1px solid rgba(0,240,255,0.15);
+      border-radius: 1px;
+    }
+    .pc-scanlines {
+      position: absolute; inset: 0; border-radius: 8px;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,240,255,0.01) 3px, rgba(0,240,255,0.01) 4px
+      );
+      pointer-events: none;
+    }
+    .pc-label {
+      position: absolute; bottom: -50px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Orbitron', sans-serif; font-size: 1.4rem;
+      font-weight: 900; letter-spacing: 6px;
+      color: var(--accent); opacity: 0.8;
+      white-space: nowrap;
+      text-shadow: 0 0 20px var(--accent);
+    }
+    .pc-stats {
+      position: absolute; right: -80px; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .stat {
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 2px;
+    }
+    .stat-val {
+      font-family: 'Orbitron', sans-serif; font-size: 1rem;
+      font-weight: 700; color: var(--accent);
+      text-shadow: 0 0 10px var(--accent);
+    }
+    .stat-label {
+      font-size: 0.65rem; letter-spacing: 2px; color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; justify-content: space-around; align-items: center;
+      gap: 40px; flex-wrap: wrap;
+    }
+    .stats-bar-item {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .stats-bar-num {
+      font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900;
+      color: var(--accent);
+      text-shadow: 0 0 20px rgba(0,240,255,0.5);
+    }
+    .stats-bar-label {
+      font-size: 0.85rem; letter-spacing: 1px; color: var(--muted);
+      text-transform: uppercase; line-height: 1.4;
+      max-width: 120px;
+    }
+    .divider { width: 1px; height: 50px; background: var(--border); }
+
+    /* PRODUCTS */
+    #products {
+      padding: 120px 60px;
+      max-width: 1300px; margin: 0 auto;
+    }
+    .section-header {
+      text-align: center; margin-bottom: 80px;
+    }
+    .section-tag {
+      font-size: 0.75rem; letter-spacing: 4px; color: var(--accent2);
+      text-transform: uppercase; font-weight: 600; margin-bottom: 16px;
+      display: block;
+    }
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900;
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-sub { color: var(--muted); font-size: 1.05rem; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: none;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,240,255,0.1), 0 0 0 1px rgba(0,240,255,0.2);
+      border-color: rgba(0,240,255,0.3);
+    }
+    .product-card:hover::before { transform: scaleX(1); }
+    .card-visual {
+      height: 220px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0a0a18, #0f0f22);
+    }
+    .card-glow {
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .product-card:hover .card-glow { opacity: 1; }
+    .card-label-badge {
+      position: absolute; top: 16px; left: 16px;
+      background: rgba(4,4,8,0.8); border: 1px solid var(--border);
+      padding: 4px 12px; font-size: 0.7rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .card-badge-hot {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--accent2); color: var(--bg);
+      padding: 4px 10px; font-size: 0.65rem; letter-spacing: 1px;
+      font-family: 'Orbitron', sans-serif; font-weight: 700;
+    }
+    .mini-pc {
+      position: relative; width: 120px; height: 170px; z-index: 1;
+    }
+    .mini-body {
+      position: absolute; inset: 0;
+      border: 1px solid rgba(0,240,255,0.2);
+      border-radius: 4px;
+      background: linear-gradient(160deg, #1a1a30, #0d0d1e);
+    }
+    .mini-rgb-top {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      border-radius: 4px 4px 0 0;
+    }
+    .card-info { padding: 28px; }
+    .card-name {
+      font-family: 'Orbitron', sans-serif; font-size: 1.1rem;
+      font-weight: 700; margin-bottom: 8px; letter-spacing: 1px;
+    }
+    .card-tagline { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+    .specs-list {
+      display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px;
+    }
+    .spec-row {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem;
+    }
+    .spec-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .spec-key { color: var(--muted); min-width: 60px; }
+    .spec-val { color: var(--text); font-weight: 600; }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 28px;
+      border-top: 1px solid var(--border);
+    }
+    .price {
+      font-family: 'Orbitron', sans-serif; font-size: 1.4rem;
+      font-weight: 900; color: var(--accent);
+    }
+    .price-sub { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; }
+    .card-btn {
+      background: transparent; border: 1px solid var(--accent);
+      color: var(--accent); padding: 10px 22px;
+      font-family: 'Orbitron', sans-serif; font-size: 0.7rem;
+      letter-spacing: 2px; cursor: none;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .card-btn:hover {
+      background: var(--accent); color: var(--bg);
+      box-shadow: 0 0 20px rgba(0,240,255,0.4);
+    }
+
+    /* SPECS SECTION */
+    #specs {
+      padding: 120px 60px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .specs-inner { max-width: 1200px; margin: 0 auto; }
+    .specs-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .spec-bars { display: flex; flex-direction: column; gap: 28px; }
+    .spec-bar-item {}
+    .spec-bar-header {
+      display: flex; justify-content: space-between;
+      margin-bottom: 10px; font-size: 0.9rem;
+    }
+    .spec-bar-name { color: var(--text); font-weight: 600; letter-spacing: 1px; }
+    .spec-bar-score { color: var(--accent); font-family: 'Orbitron', sans-serif; font-size: 0.85rem; }
+    .spec-bar-track {
+      height: 6px; background: rgba(255,255,255,0.05);
+      border-radius: 3px; overflow: hidden; position: relative;
+    }
+    .spec-bar-fill {
+      height: 100%; border-radius: 3px;
+      position: relative;
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .spec-bar-fill::after {
+      content: ''; position: absolute; right: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 10px; height: 10px; border-radius: 50%;
+      background: inherit;
+      box-shadow: 0 0 10px currentColor;
+    }
+    .specs-text h3 {
+      font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900;
+      margin-bottom: 20px; line-height: 1.3;
+    }
+    .specs-text p { color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+    .feat-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+    .feat-list li {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.95rem; color: var(--text);
+    }
+    .feat-list li::before {
+      content: '▸'; color: var(--accent); font-size: 0.8rem;
+    }
+
+    /* TESTIMONIALS */
+    #reviews {
+      padding: 120px 60px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 60px;
+    }
+    .review-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 32px; border-radius: 4px;
+      position: relative; transition: border-color 0.3s;
+    }
+    .review-card:hover { border-color: rgba(123,0,255,0.4); }
+    .stars { color: #ffb800; letter-spacing: 2px; margin-bottom: 16px; font-size: 0.9rem; }
+    .review-text { color: var(--muted); line-height: 1.7; margin-bottom: 24px; font-size: 0.95rem; }
+    .reviewer { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .reviewer-name { font-weight: 600; font-size: 0.9rem; }
+    .reviewer-tag { font-size: 0.8rem; color: var(--muted); }
+    .quote-mark {
+      position: absolute; top: 24px; right: 28px;
+      font-size: 4rem; color: rgba(123,0,255,0.15);
+      font-family: Georgia, serif; line-height: 1;
+    }
+
+    /* CTA */
+    #cta {
+      padding: 120px 60px;
+      text-align: center;
+      position: relative; overflow: hidden;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .cta-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(123,0,255,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    #cta h2 { margin-bottom: 20px; }
+    #cta p { color: var(--muted); max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 60px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 900; color: var(--accent); letter-spacing: 4px; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; letter-spacing: 1px; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { color: var(--muted); font-size: 0.8rem; }
+
+    /* SCROLL INDICATOR */
+    .scroll-line {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: fadeUp 1s 1.5s both;
+    }
+    .scroll-line span {
+      font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
+    }
+    .scroll-line-bar {
+      width: 1px; height: 40px; background: linear-gradient(180deg, var(--accent), transparent);
+      animation: scrollDrop 1.5s ease-in-out infinite;
+    }
+    @keyframes scrollDrop {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* NOISE OVERLAY */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.02; pointer-events: none; z-index: 1000;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      nav ul { display: none; }
+      .hero-content { grid-template-columns: 1fr; padding: 0 24px; text-align: center; }
+      .hero-desc { margin: 0 auto 40px; }
+      .hero-tag { justify-content: center; }
+      .hero-btns { justify-content: center; }
+      .hero-visual { display: none; }
+      #products, #specs, #reviews, #cta, footer { padding: 80px 24px; }
+      .specs-grid { grid-template-columns: 1fr; }
+      .stats-bar { padding: 24px; }
+      .divider { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Global Header -->
-    <header class="global-header">
-        <a href="#" class="logo">Compres<span>—</span>sion</a>
-        <nav class="nav">
-            <a href="#work">Work</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
 
-    <!-- The Track -->
-    <main class="track" role="region" aria-label="Portfolio Projects">
+  <!-- NAV -->
+  <nav>
+    <div class="logo">NEX<span>U</span>S</div>
+    <ul>
+      <li><a href="#products">Systems</a></li>
+      <li><a href="#specs">Performance</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <button class="nav-cta">CONFIGURE NOW</button>
+  </nav>
 
-        <!-- Panel 01 -->
-        <article class="panel">
-            <div class="panel__bg">
-                <img src="images/tm-620-com-01.jpg"
-                     alt="Modern architectural facade with geometric concrete forms"
-                     loading="eager">
-            </div>
-            <span class="panel__index">01 / 05</span>
-            <h2 class="spine">Monolith</h2>
-            <div class="details">
-                <p class="details__category">Architecture</p>
-                <h3 class="details__title">Monolith<br>Tower</h3>
-                <div class="details__meta">
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Client</span>
-                        <span class="details__meta-value">Voss & Klein</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Year</span>
-                        <span class="details__meta-value">2026</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Role</span>
-                        <span class="details__meta-value">Lead Design</span>
-                    </div>
-                </div>
-                <p class="details__description">A 42-story residential tower channeling raw concrete and negative space into a vertical statement of restrained power.</p>
-                <a href="#" class="btn-view">
-                    View Project
-                    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-                    </svg>
-                </a>
-            </div>
-        </article>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
 
-        <!-- Panel 02 -->
-        <article class="panel">
-            <div class="panel__bg">
-                <img src="images/tm-620-com-02.jpg"
-                     alt="Modern office interior with dramatic lighting and clean lines"
-                     loading="lazy">
-            </div>
-            <span class="panel__index">02 / 05</span>
-            <h2 class="spine">Signal</h2>
-            <div class="details">
-                <p class="details__category">Brand Identity</p>
-                <h3 class="details__title">Signal<br>Broadcast</h3>
-                <div class="details__meta">
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Client</span>
-                        <span class="details__meta-value">Apex Media</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Year</span>
-                        <span class="details__meta-value">2025</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Role</span>
-                        <span class="details__meta-value">Art Direction</span>
-                    </div>
-                </div>
-                <p class="details__description">Complete rebrand for a broadcast network. Distilled their ethos into a system of kinetic typography and interference patterns.</p>
-                <a href="#" class="btn-view">
-                    View Project
-                    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-                    </svg>
-                </a>
-            </div>
-        </article>
-
-        <!-- Panel 03 -->
-        <article class="panel">
-            <div class="panel__bg">
-                <img src="images/tm-620-com-03.jpg"
-                     alt="Misty mountain lake landscape with reflections"
-                     loading="lazy">
-            </div>
-            <span class="panel__index">03 / 05</span>
-            <h2 class="spine">Terrain</h2>
-            <div class="details">
-                <p class="details__category">Environmental</p>
-                <h3 class="details__title">Terrain<br>Protocol</h3>
-                <div class="details__meta">
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Client</span>
-                        <span class="details__meta-value">GeoSync Labs</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Year</span>
-                        <span class="details__meta-value">2025</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Role</span>
-                        <span class="details__meta-value">UI/UX Design</span>
-                    </div>
-                </div>
-                <p class="details__description">Dashboard interface for real-time geological survey mapping. 14 data layers rendered as a single coherent visual field.</p>
-                <a href="#" class="btn-view">
-                    View Project
-                    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-                    </svg>
-                </a>
-            </div>
-        </article>
-
-        <!-- Panel 04 -->
-        <article class="panel">
-            <div class="panel__bg">
-                <img src="images/tm-620-com-04.jpg"
-                     alt="Abstract digital art with flowing light trails"
-                     loading="lazy">
-            </div>
-            <span class="panel__index">04 / 05</span>
-            <h2 class="spine">Flux</h2>
-            <div class="details">
-                <p class="details__category">Motion Design</p>
-                <h3 class="details__title">Flux<br>Engine</h3>
-                <div class="details__meta">
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Client</span>
-                        <span class="details__meta-value">Drift Studios</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Year</span>
-                        <span class="details__meta-value">2024</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Role</span>
-                        <span class="details__meta-value">Motion Lead</span>
-                    </div>
-                </div>
-                <p class="details__description">A generative motion system for live event visuals. Procedurally driven, infinitely non-repeating, running at 120fps.</p>
-                <a href="#" class="btn-view">
-                    View Project
-                    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-                    </svg>
-                </a>
-            </div>
-        </article>
-
-        <!-- Panel 05 -->
-        <article class="panel">
-            <div class="panel__bg">
-                <img src="images/tm-620-com-05.jpg"
-                     alt="Minimalist urban architecture with geometric patterns"
-                     loading="lazy">
-            </div>
-            <span class="panel__index">05 / 05</span>
-            <h2 class="spine">Datum</h2>
-            <div class="details">
-                <p class="details__category">Digital Product</p>
-                <h3 class="details__title">Datum<br>Archive</h3>
-                <div class="details__meta">
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Client</span>
-                        <span class="details__meta-value">NordVault Inc</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Year</span>
-                        <span class="details__meta-value">2024</span>
-                    </div>
-                    <div class="details__meta-item">
-                        <span class="details__meta-label">Role</span>
-                        <span class="details__meta-value">Full Stack</span>
-                    </div>
-                </div>
-                <p class="details__description">Encrypted personal archive system. Zero-knowledge architecture wrapped in an interface that feels like handling physical documents.</p>
-                <a href="#" class="btn-view">
-                    View Project
-                    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-                    </svg>
-                </a>
-            </div>
-        </article>
-
-    </main>
-
-    <!-- Global Footer -->
-    <footer class="global-footer">
-        <p class="footer__credit">Design: <a href="https://templatemo.com/tm-620-compression" target="_blank" rel="nofollow">TemplateMo</a> &copy; 2026</p>
-        <p class="footer__scroll-hint">Hover to Expand</p>
-    </footer>
-
-    <!-- ===========================================
-         MODALS — CSS-only via :target
-         =========================================== -->
-
-    <!-- Work Modal -->
-    <div id="work" class="modal-overlay">
-        <a href="#" class="modal__close" aria-label="Close">&times;</a>
-        <div class="modal__content">
-            <p class="modal__label">Index</p>
-            <h2 class="modal__heading">Selected<br>Work</h2>
-            <p class="modal__text">A curated archive of projects spanning architecture, brand systems, motion design, and digital product. Each engagement is a compression of months into a single decisive artifact.</p>
-            <hr class="modal__divider">
-            <ul class="modal__project-list">
-                <li>
-                    <span class="modal__project-name">Monolith Tower</span>
-                    <span class="modal__project-year">2026 — Architecture</span>
-                </li>
-                <li>
-                    <span class="modal__project-name">Signal Broadcast</span>
-                    <span class="modal__project-year">2025 — Brand Identity</span>
-                </li>
-                <li>
-                    <span class="modal__project-name">Terrain Protocol</span>
-                    <span class="modal__project-year">2025 — Environmental</span>
-                </li>
-                <li>
-                    <span class="modal__project-name">Flux Engine</span>
-                    <span class="modal__project-year">2024 — Motion Design</span>
-                </li>
-                <li>
-                    <span class="modal__project-name">Datum Archive</span>
-                    <span class="modal__project-year">2024 — Digital Product</span>
-                </li>
-            </ul>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-tag">Next-Gen Gaming Systems</div>
+        <h1>
+          BUILT TO
+          <span class="line2">DOMINATE</span>
+        </h1>
+        <p class="hero-desc">
+          Precision-engineered gaming rigs that push every frame, every pixel, every millisecond to the absolute limit. Your next victory starts here.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"><span>SHOP SYSTEMS</span></button>
+          <button class="btn-ghost" onclick="document.getElementById('specs').scrollIntoView({behavior:'smooth'})">VIEW SPECS</button>
         </div>
+      </div>
+
+      <div class="hero-visual">
+        <div style="position:relative;">
+          <div class="pc-case">
+            <div class="pc-body">
+              <div class="pc-glass">
+                <!-- Fan -->
+                <div class="fan">
+                  <div class="fan-ring"></div>
+                  <div class="fan-group">
+                    <div class="fan-blade" style="transform: rotate(0deg) translate(0,-42px)"></div>
+                    <div class="fan-blade" style="transform: rotate(45deg) translate(0,-42px)"></div>
+                    <div class="fan-blade" style="transform: rotate(90deg) translate(0,-42px)"></div>
+                    <div class="fan-blade" style="transform: rotate(135deg) translate(0,-42px)"></div>
+                    <div class="fan-blade" style="transform: rotate(180deg) translate(0,-42px)"></div>
+                    <div class="fan-blade" style="transform: rotate(225deg) translate(0,-42px)"></div>
+                    <div class="fan-blade" style="transform: rotate(270deg) translate(0,-42px)"></div>
+                    <div class="fan-blade" style="transform: rotate(315deg) translate(0,-42px)"></div>
+                  </div>
+                  <div class="fan-center"></div>
+                </div>
+                <!-- GPU -->
+                <div class="gpu">
+                  <div class="gpu-rgb"></div>
+                  <div class="gpu-label">RTX 5090 Ti</div>
+                </div>
+                <!-- RAM -->
+                <div class="ram-sticks">
+                  <div class="ram"></div>
+                  <div class="ram"></div>
+                  <div class="ram"></div>
+                  <div class="ram"></div>
+                </div>
+                <div class="rgb-strip"></div>
+              </div>
+              <div class="pc-ports">
+                <div class="port"></div>
+                <div class="port"></div>
+                <div class="port"></div>
+                <div class="port"></div>
+              </div>
+            </div>
+            <div class="pc-scanlines"></div>
+            <div class="pc-label">NEXUS X1</div>
+          </div>
+          <div class="pc-stats">
+            <div class="stat">
+              <div class="stat-val">4K</div>
+              <div class="stat-label">Max Res</div>
+            </div>
+            <div class="stat">
+              <div class="stat-val">360Hz</div>
+              <div class="stat-label">Refresh</div>
+            </div>
+            <div class="stat">
+              <div class="stat-val">1ms</div>
+              <div class="stat-label">Response</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- About Modal -->
-    <div id="about" class="modal-overlay">
-        <a href="#" class="modal__close" aria-label="Close">&times;</a>
-        <div class="modal__content">
-            <p class="modal__label">Profile</p>
-            <h2 class="modal__heading">About<br>the Studio</h2>
-            <p class="modal__text"><strong>Compression</strong> is a design practice built on the belief that the best work happens under constraints. We take complex problems and compress them into clear, decisive systems.</p>
-            <p class="modal__text">Founded in 2020, the studio operates at the intersection of architecture, digital product, and visual identity. Our process is reductive — we strip away until only the essential remains.</p>
-            <hr class="modal__divider">
-            <p class="modal__text"><strong>Capabilities</strong><br>Brand Identity / Art Direction / UI &amp; UX Design / Motion Systems / Architectural Visualization / Digital Products / Creative Technology</p>
-            <hr class="modal__divider">
-            <p class="modal__text">This is a free HTML CSS template from <a href="https://templatemo.com/tm-620-compression" target="_blank" rel="nofollow">TemplateMo</a>. You are free to download, edit, and use this template for any purpose. Images are from <a href="https://unsplash.com/" target="_blank">Unsplash</a>.</p>
-        </div>
+    <div class="scroll-line">
+      <span>Scroll</span>
+      <div class="scroll-line-bar"></div>
     </div>
+  </section>
 
-    <!-- Contact Modal -->
-    <div id="contact" class="modal-overlay">
-        <a href="#" class="modal__close" aria-label="Close">&times;</a>
-        <div class="modal__content">
-            <p class="modal__label">Connect</p>
-            <h2 class="modal__heading">Get In<br>Touch</h2>
-            <p class="modal__text">Currently accepting select projects for Q3 2026. For inquiries, collaborations, or just to talk shop — reach out through any channel below.</p>
-            <hr class="modal__divider">
-            <div class="modal__contact-grid">
-                <div class="modal__contact-item">
-                    <p class="modal__contact-label">Email</p>
-                    <p class="modal__contact-value"><a href="mailto:hello@compression.studio">hello@compression.studio</a></p>
-                </div>
-                <div class="modal__contact-item">
-                    <p class="modal__contact-label">Phone</p>
-                    <p class="modal__contact-value"><a href="tel:+1234567890">+1 (234) 567-890</a></p>
-                </div>
-                <div class="modal__contact-item">
-                    <p class="modal__contact-label">Social</p>
-                    <p class="modal__contact-value"><a href="#">@compression.studio</a></p>
-                </div>
-                <div class="modal__contact-item">
-                    <p class="modal__contact-label">Location</p>
-                    <p class="modal__contact-value">Brooklyn, NY</p>
-                </div>
-            </div>
-        </div>
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-bar-item">
+      <div class="stats-bar-num" data-target="50000">0</div>
+      <div class="stats-bar-label">Rigs Delivered Worldwide</div>
     </div>
-    <script src="templatemo-620-compression-script.js"></script>
+    <div class="divider"></div>
+    <div class="stats-bar-item">
+      <div class="stats-bar-num" data-target="4.9">0</div>
+      <div class="stats-bar-label">Average Customer Rating</div>
+    </div>
+    <div class="divider"></div>
+    <div class="stats-bar-item">
+      <div class="stats-bar-num" data-suffix="hr">72</div>
+      <div class="stats-bar-label">Build Turnaround Time</div>
+    </div>
+    <div class="divider"></div>
+    <div class="stats-bar-item">
+      <div class="stats-bar-num" data-target="3">0</div>
+      <div class="stats-bar-label">Year Warranty Included</div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="section-header">
+      <span class="section-tag">Our Systems</span>
+      <h2>Choose Your Weapon</h2>
+      <p class="section-sub">Three tiers of raw power. All built to last.</p>
+    </div>
+    <div class="products-grid">
+
+      <!-- CARD 1 -->
+      <div class="product-card">
+        <div class="card-visual">
+          <div class="card-bg"></div>
+          <div class="card-glow" style="background: radial-gradient(circle at 50% 80%, rgba(0,240,255,0.12), transparent 70%)"></div>
+          <div class="card-label-badge">ENTRY</div>
+          <div class="mini-pc">
+            <div class="mini-body">
+              <div class="mini-rgb-top" style="background: linear-gradient(90deg, #00f0ff, #7b00ff); animation: rgbSlide 2s linear infinite;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-name">NEXUS CORE</div>
+          <div class="card-tagline">Dominate esports at 240fps</div>
+          <div class="specs-list">
+            <div class="spec-row"><div class="spec-dot" style="background:#00f0ff; box-shadow:0 0 6px #00f0ff"></div><span class="spec-key">CPU</span><span class="spec-val">Ryzen 7 9700X</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#00f0ff; box-shadow:0 0 6px #00f0ff"></div><span class="spec-key">GPU</span><span class="spec-val">RTX 5070 Ti</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#00f0ff; box-shadow:0 0 6px #00f0ff"></div><span class="spec-key">RAM</span><span class="spec-val">32GB DDR5</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#00f0ff; box-shadow:0 0 6px #00f0ff"></div><span class="spec-key">Storage</span><span class="spec-val">1TB NVMe</span></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div>
+            <div class="price">$1,499</div>
+            <div class="price-sub">Free shipping</div>
+          </div>
+          <button class="card-btn">ORDER</button>
+        </div>
+      </div>
+
+      <!-- CARD 2 - Featured -->
+      <div class="product-card" style="border-color: rgba(123,0,255,0.4); box-shadow: 0 0 40px rgba(123,0,255,0.1);">
+        <div class="card-visual">
+          <div class="card-bg" style="background: linear-gradient(135deg, #100820, #1a0f30)"></div>
+          <div class="card-glow" style="background: radial-gradient(circle at 50% 80%, rgba(123,0,255,0.2), transparent 70%); opacity: 1;"></div>
+          <div class="card-label-badge" style="color: var(--accent3); border-color: rgba(123,0,255,0.3);">POPULAR</div>
+          <div class="card-badge-hot">BEST SELLER</div>
+          <div class="mini-pc" style="transform: scale(1.15)">
+            <div class="mini-body" style="border-color: rgba(123,0,255,0.4); box-shadow: 0 0 30px rgba(123,0,255,0.2)">
+              <div class="mini-rgb-top" style="background: linear-gradient(90deg, #7b00ff, #ff003c); animation: rgbSlide 1.5s linear infinite;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-name" style="color: #bf80ff;">NEXUS ULTRA</div>
+          <div class="card-tagline">4K / 165fps across every AAA title</div>
+          <div class="specs-list">
+            <div class="spec-row"><div class="spec-dot" style="background:#7b00ff; box-shadow:0 0 6px #7b00ff"></div><span class="spec-key">CPU</span><span class="spec-val">Core i9-14900KF</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#7b00ff; box-shadow:0 0 6px #7b00ff"></div><span class="spec-key">GPU</span><span class="spec-val">RTX 5080 Super</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#7b00ff; box-shadow:0 0 6px #7b00ff"></div><span class="spec-key">RAM</span><span class="spec-val">64GB DDR5</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#7b00ff; box-shadow:0 0 6px #7b00ff"></div><span class="spec-key">Storage</span><span class="spec-val">2TB NVMe Gen5</span></div>
+          </div>
+        </div>
+        <div class="card-footer" style="border-color: rgba(123,0,255,0.15)">
+          <div>
+            <div class="price" style="color: #bf80ff; text-shadow: 0 0 20px rgba(123,0,255,0.6);">$2,799</div>
+            <div class="price-sub">Free express shipping</div>
+          </div>
+          <button class="card-btn" style="border-color: #7b00ff; color: #bf80ff;">ORDER</button>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="product-card">
+        <div class="card-visual">
+          <div class="card-bg" style="background: linear-gradient(135deg, #150808, #1e0a0a)"></div>
+          <div class="card-glow" style="background: radial-gradient(circle at 50% 80%, rgba(255,0,60,0.12), transparent 70%)"></div>
+          <div class="card-label-badge" style="color: var(--accent2); border-color: rgba(255,0,60,0.3);">APEX</div>
+          <div class="mini-pc">
+            <div class="mini-body" style="border-color: rgba(255,0,60,0.3); box-shadow: 0 0 20px rgba(255,0,60,0.1)">
+              <div class="mini-rgb-top" style="background: linear-gradient(90deg, #ff003c, #ff8800); animation: rgbSlide 1s linear infinite;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-name" style="color: #ff6080;">NEXUS TITAN</div>
+          <div class="card-tagline">No compromises. Absolute maximum.</div>
+          <div class="specs-list">
+            <div class="spec-row"><div class="spec-dot" style="background:#ff003c; box-shadow:0 0 6px #ff003c"></div><span class="spec-key">CPU</span><span class="spec-val">Core i9-14900KS</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#ff003c; box-shadow:0 0 6px #ff003c"></div><span class="spec-key">GPU</span><span class="spec-val">RTX 5090 Ti</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#ff003c; box-shadow:0 0 6px #ff003c"></div><span class="spec-key">RAM</span><span class="spec-val">128GB DDR5</span></div>
+            <div class="spec-row"><div class="spec-dot" style="background:#ff003c; box-shadow:0 0 6px #ff003c"></div><span class="spec-key">Storage</span><span class="spec-val">4TB NVMe RAID</span></div>
+          </div>
+        </div>
+        <div class="card-footer" style="border-color: rgba(255,0,60,0.1)">
+          <div>
+            <div class="price" style="color: #ff6080; text-shadow: 0 0 20px rgba(255,0,60,0.5);">$4,999</div>
+            <div class="price-sub">White-glove delivery</div>
+          </div>
+          <button class="card-btn" style="border-color: #ff003c; color: #ff6080;">ORDER</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPECS / PERFORMANCE -->
+  <section id="specs">
+    <div class="specs-inner">
+      <div class="specs-grid">
+        <div class="spec-bars">
+          <div class="section-tag" style="margin-bottom:12px;">Performance Benchmarks</div>
+          <h2 style="margin-bottom:40px;">Numbers That<br><span style="background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Don't Lie</span></h2>
+
+          <div class="spec-bar-item">
+            <div class="spec-bar-header">
+              <span class="spec-bar-name">CPU Performance</span>
+              <span class="spec-bar-score">98 / 100</span>
+            </div>
+            <div class="spec-bar-track">
+              <div class="spec-bar-fill" style="width:0%; background:linear-gradient(90deg, var(--accent), var(--accent3));" data-width="98%"></div>
+            </div>
+          </div>
+
+          <div class="spec-bar-item">
+            <div class="spec-bar-header">
+              <span class="spec-bar-name">GPU Benchmark</span>
+              <span class="spec-bar-score">96 / 100</span>
+            </div>
+            <div class="spec-bar-track">
+              <div class="spec-bar-fill" style="width:0%; background:linear-gradient(90deg, var(--accent3), var(--accent2));" data-width="96%"></div>
+            </div>
+          </div>
+
+          <div class="spec-bar-item">
+            <div class="spec-bar-header">
+              <span class="spec-bar-name">Thermal Efficiency</span>
+              <span class="spec-bar-score">92 / 100</span>
+            </div>
+            <div class="spec-bar-track">
+              <div class="spec-bar-fill" style="width:0%; background:linear-gradient(90deg, #00ff99, var(--accent));" data-width="92%"></div>
+            </div>
+          </div>
+
+          <div class="spec-bar-item">
+            <div class="spec-bar-header">
+              <span class="spec-bar-name">Storage Speed</span>
+              <span class="spec-bar-score">99 / 100</span>
+            </div>
+            <div class="spec-bar-track">
+              <div class="spec-bar-fill" style="width:0%; background:linear-gradient(90deg, var(--accent2), #ff8800);" data-width="99%"></div>
+            </div>
+          </div>
+
+          <div class="spec-bar-item">
+            <div class="spec-bar-header">
+              <span class="spec-bar-name">Network Latency</span>
+              <span class="spec-bar-score">94 / 100</span>
+            </div>
+            <div class="spec-bar-track">
+              <div class="spec-bar-fill" style="width:0%; background:linear-gradient(90deg, #bf80ff, var(--accent3));" data-width="94%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="specs-text">
+          <h3>Engineering Beyond Limits</h3>
+          <p>Every NEXUS system is hand-assembled by certified technicians using only tier-1 components. We stress-test each build for 48 hours before shipping.</p>
+          <p>Custom liquid cooling loops, precision cable management, and optimized BIOS profiles come standard — not as paid extras.</p>
+          <ul class="feat-list">
+            <li>48-hour burn-in test on every unit</li>
+            <li>Custom liquid cooling loop included</li>
+            <li>Optimized BIOS & driver stack pre-loaded</li>
+            <li>3-year parts & labor warranty</li>
+            <li>Lifetime phone & chat support</li>
+            <li>Free annual system tune-up</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="section-header">
+      <span class="section-tag">Customer Reviews</span>
+      <h2>Gamers Don't Lie</h2>
+      <p class="section-sub">Over 50,000 satisfied players worldwide</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">This machine is an absolute beast. Everything from Cyberpunk to Valorant runs flawlessly. Best purchase of my life — zero regrets.</p>
+        <div class="reviewer">
+          <div class="avatar" style="background: linear-gradient(135deg, var(--accent), var(--accent3));">AK</div>
+          <div>
+            <div class="reviewer-name">Arjun K.</div>
+            <div class="reviewer-tag">NEXUS ULTRA owner</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">The liquid cooling is whisper quiet. I was blown away — runs cooler than my old desktop's idle temp. Worth every cent.</p>
+        <div class="reviewer">
+          <div class="avatar" style="background: linear-gradient(135deg, var(--accent2), #ff8800);">SL</div>
+          <div>
+            <div class="reviewer-name">Sofia L.</div>
+            <div class="reviewer-tag">NEXUS TITAN owner</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text">Ordered the CORE for my son. Setup took 5 minutes, hitting 240fps in Fortnite consistently. Customer support is phenomenal too.</p>
+        <div class="reviewer">
+          <div class="avatar" style="background: linear-gradient(135deg, #00ff99, var(--accent));">MR</div>
+          <div>
+            <div class="reviewer-name">Marcus R.</div>
+            <div class="reviewer-tag">NEXUS CORE owner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-glow"></div>
+    <div style="position:relative; z-index:1;">
+      <span class="section-tag">Ready?</span>
+      <h2>Build Your Legend</h2>
+      <p>Configure your dream machine in minutes. Our expert team will handle the rest — from assembly to your doorstep.</p>
+      <div class="cta-btns">
+        <button class="btn-primary" onclick="alert('Opening configurator...')"><span>CONFIGURE YOUR PC</span></button>
+        <button class="btn-ghost" onclick="alert('Connecting to support...')">TALK TO AN EXPERT</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NEXUS</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Warranty</a>
+      <a href="#">Support</a>
+    </div>
+    <div class="footer-copy">© 2026 NEXUS Gaming Systems. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animateCursor() {
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Animate stat bars on scroll
+    const bars = document.querySelectorAll('.spec-bar-fill');
+    const statsNums = document.querySelectorAll('.stats-bar-num[data-target]');
+    let barsAnimated = false;
+    let statsAnimated = false;
+
+    function animateBars() {
+      if (barsAnimated) return;
+      const section = document.getElementById('specs');
+      const rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        barsAnimated = true;
+        bars.forEach(bar => {
+          const w = bar.getAttribute('data-width');
+          setTimeout(() => { bar.style.width = w; }, 100);
+        });
+      }
+    }
+
+    function animateStats() {
+      if (statsAnimated) return;
+      const bar = document.querySelector('.stats-bar');
+      const rect = bar.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.95) {
+        statsAnimated = true;
+        statsNums.forEach(el => {
+          const target = parseFloat(el.getAttribute('data-target'));
+          const isFloat = target < 10;
+          const duration = 1800;
+          const start = performance.now();
+          function step(now) {
+            const p = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            const val = isFloat ? (target * ease).toFixed(1) : Math.round(target * ease).toLocaleString();
+            el.textContent = val + (el.dataset.suffix || '');
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+      }
+    }
+
+    window.addEventListener('scroll', () => { animateBars(); animateStats(); });
+    animateStats();
+
+    // Subtle parallax on hero glow
+    document.addEventListener('mousemove', e => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      document.querySelector('.hero-glow').style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+    });
+  </script>
 </body>
 </html>
