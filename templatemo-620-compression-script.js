@@ -6,7 +6,6 @@
    Scroll reveal with IntersectionObserver
    + 3-second setTimeout fallback for iframe preview contexts
 */
-
 (function () {
     'use strict';
 
