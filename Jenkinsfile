@@ -28,9 +28,9 @@ pipeline {
 
                 ssh ${DOCKER_SERVER} "
                     cd ~/website &&
-                    docker build -t ${DOCKER_USER}/${IMAGE_NAME}:v2 . &&
+                    docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${BUILD_NUMBER} . &&
                     docker login -u ${DOCKER_USER} -p ${TOKEN} &&
-                    docker push ${DOCKER_USER}/${IMAGE_NAME}:v2
+                    docker push ${DOCKER_USER}/${IMAGE_NAME}:${BUILD_NUMBER}
                 "
                 '''
             }
@@ -48,7 +48,8 @@ pipeline {
                 ssh ${DOCKER_SERVER} "
                     cd ~/website &&
 
-                    kubectl apply -f deployment.yaml
+                    kubectl set image deployment/mywebsite \
+                    mywebsite=gokumonkey/mywebsite:${BUILD_NUMBER}
                 "
                 '''
             }
